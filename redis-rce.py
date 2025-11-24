@@ -58,9 +58,12 @@ def dout(sock, msg):
         else:
             print("\033[1;32;40m[<-]\033[0m {}......{}".format(msg[:80], msg[-80:]))
 
-
+# to handle unexpected bytes in the result
 def decode_shell_result(s):
+    if isinstance(s, bytes):
+        s = s.decode(errors="ignore")
     return "\n".join(s.split("\r\n")[1:-1])
+)
 
 
 class Remote:
